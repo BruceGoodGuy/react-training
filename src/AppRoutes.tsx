@@ -6,8 +6,7 @@ import type { RouteObject } from "react-router";
 import NotFound from './404.tsx';
 
 export async function pageLoader({request}: { request: Request }) {
-    await requireAuth(request); // Throws redirect if not logged in
-
+    await requireAuth(request);
     const data = await fetch("/api/dashboard").then(res => res.json());
     return data;
 }
