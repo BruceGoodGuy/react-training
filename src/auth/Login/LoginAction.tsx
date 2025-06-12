@@ -36,7 +36,7 @@ export async function doLogin(
     );
     const response = await data.json();
     if (response.success) {
-      return { isValid: true, values: { email, password }, errors };
+      return { isValid: true, values: response.data, errors };
     } else {
       for (const index in response.errors) {
         const key = response.errors[index].field as keyof typeof errors;

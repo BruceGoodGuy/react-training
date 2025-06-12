@@ -27,7 +27,7 @@ const pageRoutes: RouteObject[] = [
             { path: 'home', element: <HomePage /> },
             { path: '', element: <Navigate to="home" replace /> },
         ]
-    }
+    },
 ]
 
 export default pageRoutes;

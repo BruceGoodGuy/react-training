@@ -5,6 +5,7 @@ import { Alert } from "flowbite-react";
 import { MdError } from "react-icons/md";
 import Loading from "../../components/Loading";
 import { useNavigate } from "react-router-dom";
+import { useStore } from "../../shared";
 
 const initialState = {
   values: { email: "", password: "" },
@@ -14,12 +15,14 @@ const initialState = {
 const Login = () => {
   const navigate = useNavigate();
   const [state, formAction, isPending] = useActionState(doLogin, initialState);
+  const addUserData = useStore((state) => state.setUserData);
 
   useEffect(() => {
     if (state.isValid) {
       const redirectTo = new URLSearchParams(window.location.search).get(
         "redirectTo"
       );
+      addUserData(state.values);
       const navigateTo = redirectTo ? redirectTo : "/pages";
       navigate(navigateTo);
     }
@@ -81,32 +84,6 @@ const Login = () => {
                 {state.errors.password}
               </Alert>
             )}
-          </div>
-          <div className="flex items-start">
-            <div className="flex items-center h-5">
-              <input
-                id="remember"
-                aria-describedby="remember"
-                name="remember"
-                type="checkbox"
-                className="w-4 h-4 border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-primary-300 dark:focus:ring-primary-600 dark:ring-offset-gray-800 dark:bg-gray-700 dark:border-gray-600"
-                required
-              />
-            </div>
-            <div className="ml-3 text-sm">
-              <label
-                htmlFor="remember"
-                className="font-medium text-gray-900 dark:text-white"
-              >
-                Remember me
-              </label>
-            </div>
-            <Link
-              to="/pages/auth/reset-password"
-              className="ml-auto text-sm text-primary-700 hover:underline dark:text-primary-500"
-            >
-              Lost Password?
-            </Link>
           </div>
           <button
             type="submit"
